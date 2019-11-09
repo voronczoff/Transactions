@@ -131,7 +131,7 @@ export default {
         })
         .then(response => {
           console.log("SUCCESS!!",response);
-          alert("Data successfully uploaded. "+response);
+          alert("Data successfully uploaded. "+JSON.stringify(response));
         })
         .catch(error => {
           console.log("FAILURE!!",error.response);
