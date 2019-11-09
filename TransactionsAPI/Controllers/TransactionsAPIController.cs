@@ -10,111 +10,46 @@ using TransactionsAPI.Models;
 
 namespace Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Transactions")]
     [ApiController]
     public class TransactionsAPIController : ControllerBase
     {
-        private readonly TransactionContext _context;
+        private readonly TransactionContext _context;        
 
         public TransactionsAPIController(TransactionContext context)
         {
             _context = context;
         }
 
-        // GET: api/TransactionsAPI
+        // GET: api/Transactions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactions()
         {
             return await _context.Transactions.ToListAsync();
         }
 
-        // GET: api/TransactionsAPI/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Transaction>> GetTransaction(string id)
+        // GET: api/TransactionsAPI/byCurrency/USD
+        [HttpGet("byCurrency/{currency}")]
+        public IEnumerable<Transaction> GetTransactionsAPIByCurrency(string currency)
         {
-            var transaction = await _context.Transactions.FindAsync(id);
-
-            if (transaction == null)
-            {
-                return NotFound();
-            }
-
-            return transaction;
+            return _context.Transactions.Where(c => c.CurrencyCode.Equals(currency)).AsEnumerable();
         }
 
-        // PUT: api/TransactionsAPI/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTransaction(string id, Transaction transaction)
+        // GET: api/TransactionsAPI/byStatus/R
+        [HttpGet("byStatus/{status}")]
+        public IEnumerable<Transaction> GetTransactionsAPIByStatus(string status)
         {
-            if (id != transaction.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(transaction).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TransactionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return _context.Transactions.Where(c => c.Status.Equals(status)).AsEnumerable();
         }
 
-        // POST: api/TransactionsAPI
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        [HttpPost]
-        public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
+        // GET: api/TransactionsAPI/byDateRange?startDate=2001-01-24T16:09:15&endDate=2002-02-24T16:09:15
+        [HttpGet("byDateRange")]
+        public IEnumerable<Transaction> GetTransactionsAPIByStatus(DateTime startDate, DateTime endDate)
         {
-            _context.Transactions.Add(transaction);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (TransactionExists(transaction.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
+            return _context.Transactions.Where(c => c.Date >= startDate && c.Date <= endDate).AsEnumerable();
         }
 
-        // DELETE: api/TransactionsAPI/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Transaction>> DeleteTransaction(string id)
-        {
-            var transaction = await _context.Transactions.FindAsync(id);
-            if (transaction == null)
-            {
-                return NotFound();
-            }
 
-            _context.Transactions.Remove(transaction);
-            await _context.SaveChangesAsync();
-
-            return transaction;
-        }
 
         private bool TransactionExists(string id)
         {
