@@ -17,7 +17,13 @@
           <v-card flat>
             <v-card-text>
               <p>Upload from csv or xml file</p>
-              <v-file-input ref="file" multiple label="File input" @change="onFilePicked" accept=".xml,.csv"></v-file-input>
+              <v-file-input
+                ref="file"
+                multiple
+                label="File input"
+                @change="onFilePicked"
+                accept=".xml, .csv"
+              ></v-file-input>
               <v-btn v-if="file" @click.native="upload()">Upload</v-btn>
             </v-card-text>
           </v-card>
@@ -62,7 +68,6 @@
             </v-card-text>
           </v-card>
         </v-tab-item>
-        
       </v-tabs>
     </v-card>
 
@@ -99,21 +104,14 @@ export default {
   name: "Main",
   data: () => ({
     file: null,
-    currency:"USD",
-    status:"A",
-    dateFrom:"2000-01-24T16:09:15",
-    dateTo:"2012-02-24T16:09:15",
-    getResponse: null    
+    currency: "USD",
+    status: "A",
+    dateFrom: "2000-01-24T16:09:15",
+    dateTo: "2012-02-24T16:09:15",
+    getResponse: null
   }),
 
   computed: {
-    // cval: function() {
-    //   return this.searchPhrase;
-    // },
-    //     imageGoogleSearch(){
-    //       // https://www.google.com/search?q=art+wallpaper&biw=1100&bih=584&tbm=isch&source=lnt&tbs=isz:ex,iszw:1920,iszh:1080
-    // return "https://www.google.com/search?biw=1100&bih=584&tbm=isch&source=lnt&tbs=isz:ex,iszw:1920,iszh:1080&q=;"+articleTitle;
-    //     },
   },
 
   methods: {
@@ -121,8 +119,7 @@ export default {
       let formData = new FormData();
       formData.append("file", this.file);
       console.log(">> formData >> ", formData);
-
-      // You should have a server side REST API
+      
       axios
         .post("https://localhost:5001/api/Transactions", formData, {
           headers: {
@@ -130,13 +127,18 @@ export default {
           }
         })
         .then(response => {
-          console.log("SUCCESS!!",response);
-          alert("Data successfully uploaded. "+JSON.stringify(response));
+          console.log("SUCCESS!!", response);
+          alert("Data successfully uploaded. " + JSON.stringify(response));
         })
         .catch(error => {
-          console.log("FAILURE!!",error.response);
-          alert("Error occured while uploading. "+JSON.stringify(error.response.data.errors));
+          console.log("FAILURE!!", error.response);
+          alert(
+            "Error occured while uploading. " +
+              JSON.stringify(error.response.data.errors)
+          );
         });
+
+        this.getTransactions("https://localhost:5001/api/Transactions");    
     },
     onFilePicked(file) {
       this.file = file[0];
@@ -154,10 +156,7 @@ export default {
     }
   },
   mounted: function() {
-    console.log("Mounted");
-    // https://localhost:5001/api/Transactions
-    // https://localhost:5001/api/Transactions/byCurrency/USD
-
+    console.log("Mounted");    
     this.getTransactions("https://localhost:5001/api/Transactions");
   }
 };
