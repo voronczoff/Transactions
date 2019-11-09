@@ -11,6 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+
+using TransactionsAPI.Models;
+using TransactionsAPI.Data;
+
+
 namespace TransactionsAPI
 {
     public class Startup
@@ -25,6 +30,8 @@ namespace TransactionsAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TransactionContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
+
             services.AddControllers();
         }
 
