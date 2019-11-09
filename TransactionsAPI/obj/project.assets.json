@@ -8041,7 +8041,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
-      "CsvHelper",
+      "CsvHelper >= 12.2.1",
       "Microsoft.EntityFrameworkCore.Design >= 3.0.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.0.0",
       "Microsoft.EntityFrameworkCore.Tools >= 3.0.0",
@@ -8055,11 +8055,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\toGit\\Transactions\\TransactionsAPI\\TransactionsAPI.csproj",
+      "projectUniqueName": "c:\\toGit\\Transactions\\TransactionsAPI\\TransactionsAPI.csproj",
       "projectName": "TransactionsAPI",
-      "projectPath": "C:\\toGit\\Transactions\\TransactionsAPI\\TransactionsAPI.csproj",
+      "projectPath": "c:\\toGit\\Transactions\\TransactionsAPI\\TransactionsAPI.csproj",
       "packagesPath": "C:\\Users\\Dante\\.nuget\\packages\\",
-      "outputPath": "C:\\toGit\\Transactions\\TransactionsAPI\\obj\\",
+      "outputPath": "c:\\toGit\\Transactions\\TransactionsAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -8091,7 +8091,7 @@
         "dependencies": {
           "CsvHelper": {
             "target": "Package",
-            "version": "(, )"
+            "version": "[12.2.1, )"
           },
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",

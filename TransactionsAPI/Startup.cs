@@ -12,8 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 
+using Microsoft.EntityFrameworkCore;
 using TransactionsAPI.Models;
 using TransactionsAPI.Data;
+
 
 
 namespace TransactionsAPI
