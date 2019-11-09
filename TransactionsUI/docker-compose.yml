@@ -1,0 +1,16 @@
+version: '3.2'
+services:
+  bpm-ui:
+    container_name: bpm-ui
+    image: "${CI_REGISTRY_IMAGE}:${CI_PIPELINE_ID}"
+    restart: always
+    expose:
+    - 80
+    environment:
+    - "S3_URL=http://s3.amazonaws.com/qwe"
+    networks:
+    - private
+networks:
+  private:
+    external:
+      name: compose_private
